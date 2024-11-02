@@ -1,7 +1,9 @@
 import 'package:currency_converter/services/api_client.dart';
 import 'package:currency_converter/utils/app_constants.dart';
+import 'package:currency_converter/providers/currency_provider.dart';
 import 'package:currency_converter/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,52 +13,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ApiClient apiClient = ApiClient();
-  List<String> currencies = [];
-  String fromCurrency = "usd";
-  String toCurrency = "eur";
-
-  double changeRate = 0.0;
-  double total = 0.0;
   TextEditingController amountController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    (() async {
-      List<String> currencyList = await getCurrencyList();
-      var rate = await getRate(fromCurrency, toCurrency);
-      setState(() {
-        currencies = currencyList;
-        changeRate = rate;
-      });
-    })();
-  }
-
-  Future<List<String>> getCurrencyList() async {
-    return await apiClient.getCurrencies();
-  }
-
-  Future<double> getRate(String fromCurrency, String toCurrency) async {
-    return await apiClient.getRate(fromCurrency, toCurrency);
-  }
-
-  void _swapCurrencies() async {
-    String temp = fromCurrency;
-    setState(() {
-      fromCurrency = toCurrency;
-      toCurrency = temp;
-    });
-    double rate = await getRate(fromCurrency, toCurrency);
-    setState(() => changeRate = rate);
-    if (amountController.text != '') {
-      double amount = double.parse(amountController.text);
-      setState(() => total = amount * changeRate);
-    }
+    Provider.of<CurrencyProvider>(context, listen: false).initData();
   }
 
   @override
   Widget build(BuildContext context) {
+    var listCurrencies = context.watch<CurrencyProvider>().currencies;
+    var fromCurrency = context.watch<CurrencyProvider>().fromCurrency;
+    var toCurrency = context.watch<CurrencyProvider>().toCurrency;
+    var exchangeRate = context.watch<CurrencyProvider>().exchangeRate;
+    var convertResult = context.watch<CurrencyProvider>().convertResult;
+
     return Scaffold(
       backgroundColor: AppColors.mainColor,
       appBar: AppBar(
@@ -91,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    labelText: "Input amount to convert",
+                    labelText: "Amount",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     labelStyle: const TextStyle(color: Colors.white),
                     enabledBorder: OutlineInputBorder(
@@ -103,10 +75,10 @@ class _HomePageState extends State<HomePage> {
                       borderSide: const BorderSide(color: Colors.white),
                     ),
                   ),
-                  onChanged: (value) {
-                    if (value != '') {
+                  onSubmitted: (value) {
+                    if (value.isNotEmpty) {
                       double amount = double.parse(value);
-                      setState(() => total = amount * changeRate);
+                      context.read<CurrencyProvider>().computeResult(amount);
                     }
                   },
                 ),
@@ -117,16 +89,12 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomDropdown(
-                      currencies,
-                      fromCurrency,
-                      (newValue) async {
-                        setState(() => fromCurrency = newValue!);
-                        double rate = await getRate(fromCurrency, toCurrency);
-                        setState(() => changeRate = rate);
-                      },
+                      items: context.watch<CurrencyProvider>().currencies,
+                      value: fromCurrency,
+                      onChanged: (newValue) => context.read<CurrencyProvider>().convertFrom(newValue!),
                     ),
                     IconButton(
-                      onPressed: _swapCurrencies,
+                      onPressed: context.read<CurrencyProvider>().swapCurrencies,
                       icon: const Icon(
                         Icons.swap_horiz,
                         size: 40,
@@ -134,20 +102,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     CustomDropdown(
-                      currencies,
-                      toCurrency,
-                      (newValue) async {
-                        setState(() => toCurrency = newValue!);
-                        double rate = await getRate(fromCurrency, toCurrency);
-                        setState(() => changeRate = rate);
-                      },
+                      items: listCurrencies,
+                      value: toCurrency,
+                      onChanged: (newValue) => context.read<CurrencyProvider>().convertTo(newValue!),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 10),
               Text(
-                "Rate $changeRate",
+                "Rate $exchangeRate",
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -155,7 +119,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Text(
-                total.toStringAsFixed(3),
+                convertResult.toStringAsFixed(3),
                 style: const TextStyle(
                   color: Colors.greenAccent,
                   fontSize: 40,

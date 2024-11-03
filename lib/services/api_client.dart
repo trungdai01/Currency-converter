@@ -10,7 +10,7 @@ class ApiClient {
     var response = await http.get(currencyListURL);
     if (response.statusCode == 200) {
       var body = allCurrenciesFromJson(response.body);
-      List<String> currencyList = (body.keys).toList();
+      List<String> currencyList = body.keys.toList();
       return currencyList;
     } else {
       throw Exception("Failed to fetch currencies API");
@@ -21,9 +21,7 @@ class ApiClient {
     final Uri exchangeRateURL = Uri.https(AppConstants.baseURL, "${AppConstants.ratesURL}$fromCurrency.json");
     var response = await http.get(exchangeRateURL);
     if (response.statusCode == 200) {
-      //   log(response.body);
       var body = jsonDecode(response.body);
-      //   log("$body");
       return body[fromCurrency][toCurrency];
     } else {
       throw Exception("Failed to fetch exchange rate API");

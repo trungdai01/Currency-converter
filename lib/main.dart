@@ -1,5 +1,5 @@
 import 'package:currency_converter/pages/home_page.dart';
-import 'package:currency_converter/providers/currency_provider.dart';
+import 'package:currency_converter/viewmodels/currency_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +8,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => CurrencyProvider()),
+        ChangeNotifierProvider(create: (_) => CurrencyViewModel()),
       ],
       child: const MyApp(),
     ),

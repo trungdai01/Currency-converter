@@ -9,6 +9,13 @@ This app is a simple and efficient currency converter built with Flutter, allowi
 - Swap between two currencies.
 - Display converted amount on the screen.
 
+## Architecture
+![Architecture](github/MVVM_architecture.png)
+This app follows the **Model-View-ViewModel (MVVM)** pattern. Here's an overview of each component:
+- **View**: Displays UI elements and interacts with users, updating based on changes in the **ViewModel**.
+- **ViewModel**: Acts as a mediator between **View** and **Model**. Manages app state and handles data logic. 
+- **Model**: Responsible for data operations, fetching currency rates from the API and providing data to the **ViewModel**.
+
 ## Folder Structure
 ```
 lib/
@@ -35,7 +42,7 @@ lib/
 └── main.dart
 ```
 
-## Build and Run
+## Getting Started
 Follow these steps to get the app up and running:
 1. Clone the repository: ```git clone https://github.com/trungdai01/currency_converter.git```
 2. Navigate to the project directory: ```cd currency_converter```

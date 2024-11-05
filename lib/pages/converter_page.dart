@@ -41,45 +41,45 @@ class _ConverterPageState extends State<ConverterPage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(Dimension.height15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                padding: EdgeInsets.symmetric(vertical: Dimension.height15, horizontal: Dimension.height10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Enter amount",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: Dimension.font16, color: Colors.white),
                     ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: Dimension.height5),
                     TextFormField(
                       controller: amountController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 24.0,
+                        fontSize: Dimension.font24,
                       ),
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(Dimension.radius5),
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(Dimension.radius5),
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                       ),
                       onChanged: (value) => context.read<CurrencyViewModel>().inputValidate(value),
                     ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: Dimension.height5),
                     SizedBox(
-                      height: 15,
+                      height: Dimension.height15,
                       child: Text(
                         inputValidate ? "" : "Please enter a valid amount",
                         style: const TextStyle(color: Colors.redAccent),
@@ -89,18 +89,23 @@ class _ConverterPageState extends State<ConverterPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 10.0, right: 10.0, left: 10.0, top: 5),
+                padding: EdgeInsets.only(
+                  bottom: Dimension.height10,
+                  right: Dimension.height10,
+                  left: Dimension.height10,
+                  top: Dimension.height5,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           "From",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(color: Colors.white, fontSize: Dimension.font16),
                         ),
-                        const SizedBox(height: 5),
+                        SizedBox(height: Dimension.height5),
                         CustomDropdown(
                           items: abbreviations,
                           value: baseCurrency,
@@ -112,12 +117,12 @@ class _ConverterPageState extends State<ConverterPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(""),
-                        const SizedBox(height: 5),
+                        SizedBox(height: Dimension.height5),
                         IconButton(
                           onPressed: context.read<CurrencyViewModel>().swapCurrencies,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.swap_horiz,
-                            size: 40,
+                            size: Dimension.font40,
                             color: Colors.white,
                           ),
                         ),
@@ -126,8 +131,11 @@ class _ConverterPageState extends State<ConverterPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("To", style: TextStyle(fontSize: 16, color: Colors.white)),
-                        const SizedBox(height: 5),
+                        Text(
+                          "To",
+                          style: TextStyle(color: Colors.white, fontSize: Dimension.font16),
+                        ),
+                        SizedBox(height: Dimension.height5),
                         CustomDropdown(
                           items: abbreviations,
                           value: targetCurrency,
@@ -138,43 +146,43 @@ class _ConverterPageState extends State<ConverterPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 40.0),
+              SizedBox(height: Dimension.height40),
               Container(
                 width: double.infinity,
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                height: Dimension.height40 + Dimension.height10,
+                padding: EdgeInsets.symmetric(horizontal: Dimension.height10),
                 child: ElevatedButton(
                   onPressed: () {
                     context.read<CurrencyViewModel>().computeResult();
                   },
                   style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimension.radius5)),
                     backgroundColor: AppColors.secondColor,
                   ),
-                  child: const Text(
+                  child: Text(
                     "Convert",
-                    style: TextStyle(fontSize: 26, color: Colors.white),
+                    style: TextStyle(fontSize: Dimension.font26, color: Colors.white),
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: Dimension.height40),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(Dimension.radius8),
                 child: Column(
                   children: [
                     Text(
                       "1 ${baseCurrency.toUpperCase()} = ${rateFormat.format(exchangeRate)} ${targetCurrency.toUpperCase()}",
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: TextStyle(
+                        fontSize: Dimension.font20,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: Dimension.height10 * 2),
                     Text(
                       resultFormat.format(convertResult),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.greenAccent,
-                        fontSize: 40,
+                        fontSize: Dimension.font36,
                       ),
                     ),
                   ],

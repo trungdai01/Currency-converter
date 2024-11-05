@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:currency_converter/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -5,18 +8,19 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    log("${Dimension.screenHeight} ${Dimension.screenWidth}");
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 16.0),
+          const CircularProgressIndicator(),
+          SizedBox(height: Dimension.height15),
           Text(
-            "Getting ready...",
+            "Getting ready",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: Dimension.font20,
             ),
           ),
         ],

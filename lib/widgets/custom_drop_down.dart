@@ -1,3 +1,4 @@
+import 'package:currency_converter/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
@@ -20,29 +21,29 @@ class _CustomDropdownState extends State<CustomDropdown> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 120,
+      width: 8 * Dimension.width15,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<String>(
           value: widget.value,
           isExpanded: true,
-          menuItemStyleData: const MenuItemStyleData(
-            height: 40,
-            padding: EdgeInsets.symmetric(horizontal: 14.0),
+          menuItemStyleData: MenuItemStyleData(
+            height: Dimension.height40,
+            padding: EdgeInsets.symmetric(horizontal: Dimension.width15),
           ),
           dropdownStyleData: DropdownStyleData(
-            maxHeight: 300,
-            width: 120,
+            maxHeight: 30 * Dimension.height10,
+            width: 8 * Dimension.width15,
             offset: const Offset(0, -5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
+              borderRadius: BorderRadius.circular(Dimension.radius5),
             ),
           ),
           buttonStyleData: ButtonStyleData(
             elevation: 2,
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            height: Dimension.height10 + Dimension.height40,
+            padding: EdgeInsets.symmetric(horizontal: Dimension.width10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
+              borderRadius: BorderRadius.circular(Dimension.radius5),
               border: Border.all(color: Colors.black26),
               color: Colors.white,
             ),
@@ -54,8 +55,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 value: item,
                 child: Text(
                   item.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 18,
+                  style: TextStyle(
+                    fontSize: Dimension.font18,
                     color: Colors.black,
                   ),
                 ),
@@ -67,42 +68,3 @@ class _CustomDropdownState extends State<CustomDropdown> {
     );
   }
 }
-
-// class CustomDropdown extends StatefulWidget {
-//   final List<String> items;
-//   final String value;
-//   final void Function(String?)? onChanged;
-//   const CustomDropdown({
-//     super.key,
-//     required this.items,
-//     required this.value,
-//     required this.onChanged,
-//   });
-
-//   @override
-//   State<CustomDropdown> createState() => _CustomDropdownState();
-// }
-
-// class _CustomDropdownState extends State<CustomDropdown> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: MediaQuery.of(context).size.width / 2,
-//       child: DropdownButtonHideUnderline(
-//         child: GFDropdown(
-//           isDense: true,
-//           value: widget.value,
-//           items: widget.items.map<DropdownMenuItem<String>>(
-//             (item) {
-//               return DropdownMenuItem(
-//                 value: item,
-//                 child: Text(item.toUpperCase()),
-//               );
-//             },
-//           ).toList(),
-//           onChanged: widget.onChanged,
-//         ),
-//       ),
-//     );
-//   }
-// }

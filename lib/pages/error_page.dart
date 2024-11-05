@@ -1,3 +1,4 @@
+import 'package:currency_converter/utils/app_constants.dart';
 import 'package:currency_converter/viewmodels/currency_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,19 +16,19 @@ class ErrorPage extends StatelessWidget {
         children: [
           Text(
             message,
-            style: const TextStyle(
-              fontSize: 20.0,
+            style: TextStyle(
+              fontSize: Dimension.font20,
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
           ),
-          const SizedBox(height: 16.0),
+          SizedBox(height: Dimension.height15),
           ElevatedButton(
             onPressed: () => Provider.of<CurrencyViewModel>(context, listen: false).initData(),
-            child: const Text(
+            child: Text(
               "Retry",
               style: TextStyle(
-                fontSize: 20.0,
+                fontSize: Dimension.font20,
                 fontWeight: FontWeight.w600,
               ),
             ),

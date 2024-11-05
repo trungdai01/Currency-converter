@@ -31,12 +31,12 @@ class _HomePageState extends State<HomePage> {
           : AppBar(
               backgroundColor: AppColors.mainColor,
               foregroundColor: Colors.white,
-              title: const Center(
+              title: Center(
                 child: Text(
                   "Currency Converter",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 36,
+                    fontSize: Dimension.font36,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

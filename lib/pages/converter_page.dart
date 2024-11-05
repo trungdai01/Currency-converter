@@ -2,6 +2,7 @@ import 'package:currency_converter/utils/app_constants.dart';
 import 'package:currency_converter/viewmodels/currency_view_model.dart';
 import 'package:currency_converter/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ConverterPage extends StatefulWidget {
@@ -13,6 +14,8 @@ class ConverterPage extends StatefulWidget {
 
 class _ConverterPageState extends State<ConverterPage> {
   late TextEditingController amountController;
+  final resultFormat = NumberFormat("#,##0.000", "en_US");
+  final rateFormat = NumberFormat("#,##0.##########", "en_US");
 
   @override
   void initState() {
@@ -72,9 +75,7 @@ class _ConverterPageState extends State<ConverterPage> {
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                       ),
-                      onChanged: (value) {
-                        context.read<CurrencyViewModel>().inputValidate(value);
-                      },
+                      onChanged: (value) => context.read<CurrencyViewModel>().inputValidate(value),
                     ),
                     const SizedBox(height: 5),
                     SizedBox(
@@ -162,7 +163,7 @@ class _ConverterPageState extends State<ConverterPage> {
                 child: Column(
                   children: [
                     Text(
-                      "1 ${baseCurrency.toUpperCase()} = $exchangeRate ${targetCurrency.toUpperCase()}",
+                      "1 ${baseCurrency.toUpperCase()} = ${rateFormat.format(exchangeRate)} ${targetCurrency.toUpperCase()}",
                       style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,
@@ -170,7 +171,7 @@ class _ConverterPageState extends State<ConverterPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      convertResult.toStringAsFixed(3),
+                      resultFormat.format(convertResult),
                       style: const TextStyle(
                         color: Colors.greenAccent,
                         fontSize: 40,

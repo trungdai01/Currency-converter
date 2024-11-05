@@ -4,10 +4,11 @@
 This app is a simple and efficient currency converter built with Flutter, allowing users to convert between various currencies in real-time. The app fetches latest exchange rates from an API and provides a user-friendly interface for seamless conversion.
 
 ## Features
-- Fetch live exchange rates data.
-- Get exchange rates among currencies.
-- Swap between two currencies.
-- Display converted amount on the screen.
+- List of available currencies.
+- Base and target currency selection.
+- Fetch live exchange rates data from API.
+- Display converted amount in real-time.
+- User-friendly minimal interface.
 
 ## Architecture
 This app follows the **Model-View-ViewModel (MVVM)** pattern. Here's an overview of each component:
@@ -56,6 +57,9 @@ The app integrates a free currency exchange rates API from this repository [exch
 - [http](https://pub.dev/packages/http): For making HTTP requests.
 - [provider](https://pub.dev/packages/provider): State management package.
 - [dropdown_button2](https://pub.dev/packages/dropdown_button2): Steady dropdown menu.
+- [intl](https://pub.dev/packages/intl): For number formatting.
+- [mockito](https://pub.dev/packages/mockito): Unit testing package.
+- [build_runner](https://pub.dev/packages/build_runner): Generating file package.
   
 ## Usage
 Valid values are **numbers 0-9**, **comma** and **decimal point**. If the value has more than one decimal point, that one is invalid and the app will indicate an error. If the value has a comma, the user must input exactly three digits after that comma to get the value accepted. Otherwise, it will be rejected.
@@ -73,3 +77,6 @@ Examples of invalid input:
 - 1.23,4
 - 007
 - .95
+
+## Video demonstration
+Check out this [link](https://drive.google.com/file/d/1v9IQ5KgimmegiI7fs1wfXJY7Ww3J_dRJ/view?usp=drive_link). 

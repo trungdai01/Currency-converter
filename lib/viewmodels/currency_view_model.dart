@@ -40,6 +40,7 @@ class CurrencyViewModel extends ChangeNotifier {
     await setCurrencies();
     await setRates();
     getRate(_targetCurrency);
+    _convertResult = 0.0;
 
     _isLoading = false;
     notifyListeners();

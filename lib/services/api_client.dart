@@ -9,6 +9,11 @@ import 'package:http/http.dart' as http;
 class ApiClient {
   final Uri currencyListURL = Uri.https(AppConstants.baseURL, AppConstants.currenciesURL);
 
+  /// This function will get a currency JSON string from API. Each entry of the JSON string will be a CurrencyModel.
+  /// It is then converted to a list of CurrencyModel.
+  ///
+  /// The result is based on the response statusCode. If it fetches the api successfully,
+  /// the object is a Success instance. Otherwise, it is a Failure instance.
   Future<ApiResponse<List<CurrencyModel>>> getCurrencies() async {
     try {
       var response = await http.get(currencyListURL);
@@ -26,6 +31,8 @@ class ApiClient {
     }
   }
 
+  /// Get the exchange rates based on the base currency that corresponds 
+  /// to each of other currencies.
   Future<ApiResponse<RatesModel>> getRates(String baseCurrency) async {
     try {
       final Uri exchangeRateURL = Uri.https(AppConstants.baseURL, "${AppConstants.ratesURL}$baseCurrency.json");

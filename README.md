@@ -10,11 +10,11 @@ This app is a simple and efficient currency converter built with Flutter, allowi
 - Display converted amount on the screen.
 
 ## Architecture
-![Architecture](github/MVVM_architecture.png)
 This app follows the **Model-View-ViewModel (MVVM)** pattern. Here's an overview of each component:
 - **View**: Displays UI elements and interacts with users, updating based on changes in the **ViewModel**.
 - **ViewModel**: Acts as a mediator between **View** and **Model**. Manages app state and handles data logic. 
 - **Model**: Responsible for data operations, fetching currency rates from the API and providing data to the **ViewModel**.
+![Architecture](github/MVVM_architecture.png)
 
 ## Folder Structure
 ```
@@ -56,3 +56,20 @@ The app integrates a free currency exchange rates API from this repository [exch
 - [http](https://pub.dev/packages/http): For making HTTP requests.
 - [provider](https://pub.dev/packages/provider): State management package.
 - [dropdown_button2](https://pub.dev/packages/dropdown_button2): Steady dropdown menu.
+  
+## Usage
+Valid values are **numbers 0-9**, **comma** and **decimal point**. If the value has more than one decimal point, that one is invalid and the app will indicate an error. If the value has a comma, the user must input exactly three digits after that comma to get the value accepted. Otherwise, it will be rejected.
+
+Examples of valid input:
+- 123
+- 1,000
+- 123,123,123.456
+- 0.95
+
+Examples of invalid input:
+- 1.2.3
+- 1,23
+- 1,2,3
+- 1.23,4
+- 007
+- .95

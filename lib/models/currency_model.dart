@@ -1,5 +1,3 @@
-import "dart:convert";
-
 class CurrencyModel {
   final String? abbreviation;
   final String? name;
@@ -12,10 +10,4 @@ class CurrencyModel {
       name: json.value,
     );
   }
-}
-
-Map<String, String> allCurrenciesFromJson(String json) {
-  return Map.from(jsonDecode(json)).map(
-    (key, value) => MapEntry<String, String>(key, value),
-  );
 }

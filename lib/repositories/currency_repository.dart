@@ -5,6 +5,7 @@ import 'package:currency_converter/utils/api_response.dart';
 class CurrencyRepository {
   ApiClient apiClient = ApiClient();
 
+  /// Holds the list of CurrencyModel.
   Future<ApiResponse<List<CurrencyModel>>> getCurrencies() async {
     return await apiClient.getCurrencies();
   }

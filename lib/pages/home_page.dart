@@ -45,6 +45,9 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Builder(
           builder: (context) {
+            // If the app is loading, show the loading page.
+            // If the app has an error, display the error page.
+            // Otherwise, show the converter.
             if (data.isLoading) {
               return const LoadingPage();
             } else if (data.errorCode != null) {

@@ -8,7 +8,7 @@ class RatesModel {
   factory RatesModel.fromJson(Map<String, dynamic> json) {
     String baseCurrency = json.keys.firstWhere((key) => key != 'date');
 
-    Map<String, dynamic> rates = json[baseCurrency];
+    Map<String, dynamic> rates = json[baseCurrency]; // since the Map of exchange rates is a value of the baseCurrency in the JSON string.
     return RatesModel(
       date: json['date'],
       baseCurrency: baseCurrency,

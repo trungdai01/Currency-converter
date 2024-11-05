@@ -21,11 +21,7 @@ class CurrencyViewModel extends ChangeNotifier {
   String? _errorCode;
   bool _isLoading = false;
   bool _isValidate = true;
-  final currencyPatterns = [
-    RegExp(r'0|[1-9]\d{0,2}(,\d{3})*|[1-9]\d*'),
-    // RegExp(r'^(\d{1,3}(,\d{3})*|\d+)(\.\d+)'),
-    RegExp(r'^\.\d+'),
-  ];
+  final currencyPatterns = RegExp(r'^(0|[1-9]\d*)(((,\d{3})*)?(\.\d+)?)$');
 
   List<String> get abbreviations => _abbreviations;
   String get baseCurrency => _baseCurrency;
@@ -36,6 +32,7 @@ class CurrencyViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get isValidate => _isValidate;
 
+  /// Initialize app state variable and get currency and exchange rates from repositories.
   Future<void> initData() async {
     _errorCode = null;
     _isLoading = true;
@@ -48,6 +45,7 @@ class CurrencyViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Setting the list of abbreviations to be displayed to UI.
   Future<void> setCurrencies() async {
     final response = await currencyRepository.getCurrencies();
     if (response is Success) {
@@ -58,6 +56,7 @@ class CurrencyViewModel extends ChangeNotifier {
     }
   }
 
+  /// Set the RatesModel
   Future<void> setRates() async {
     final response = await ratesRepository.getRates(_baseCurrency);
     if (response is Success) {
@@ -67,11 +66,16 @@ class CurrencyViewModel extends ChangeNotifier {
     }
   }
 
+  /// Get an exchange rate to the target currency.
   void getRate(String targetCurrency) {
-    _exchangeRate = ratesModel!.rates[targetCurrency].toDouble();
+    if (_errorCode == null) {
+      _exchangeRate = ratesModel!.rates[targetCurrency].toDouble();
+    }
     notifyListeners();
   }
 
+  /// Swap between two currencies. Since swapping cause the base currency to be changed,
+  /// it must call API to get new exchange rates.
   Future<void> swapCurrencies() async {
     String temp = _baseCurrency;
     _baseCurrency = _targetCurrency;
@@ -82,16 +86,19 @@ class CurrencyViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Compute the result based on the amount
   void computeResult() {
     _convertResult = _newAmount * _exchangeRate;
     notifyListeners();
   }
 
+  /// Set the input amount to app state
   void setNewAmount(double newAmount) {
     _newAmount = newAmount;
     notifyListeners();
   }
 
+  /// Make a change to the base currency
   Future<void> convertFrom(String newCurrrency) async {
     _baseCurrency = newCurrrency;
     await setRates();
@@ -100,6 +107,7 @@ class CurrencyViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Make a change to the target currency
   void convertTo(String newCurrency) {
     _targetCurrency = newCurrency;
     getRate(_targetCurrency);
@@ -107,19 +115,22 @@ class CurrencyViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Validate the amount input
   void inputValidate(String input) {
-    for (var pattern in currencyPatterns) {
-      if (pattern.hasMatch(input)) {
-        if (input.startsWith('.')) {
-          input = "0$input";
-        }
-        input = input.replaceAll(RegExp(r','), '');
-        double amount = double.parse(input);
-        setNewAmount(amount);
-        _isValidate = true;
-        notifyListeners();
-        return;
-      }
+    // It is fine to input nothing.
+    if (input.isEmpty) {
+      _isValidate = true;
+      setNewAmount(0.0);
+      notifyListeners();
+      return;
+    }
+    if (currencyPatterns.hasMatch(input)) {
+      input = input.replaceAll(RegExp(r','), '');
+      double amount = double.parse(input);
+      setNewAmount(amount);
+      _isValidate = true;
+      notifyListeners();
+      return;
     }
     _isValidate = false;
     setNewAmount(0.0);

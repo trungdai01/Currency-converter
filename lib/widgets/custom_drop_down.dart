@@ -28,18 +28,18 @@ class _CustomDropdownState extends State<CustomDropdown> {
           isExpanded: true,
           menuItemStyleData: MenuItemStyleData(
             height: Dimension.height40,
-            padding: EdgeInsets.symmetric(horizontal: Dimension.width15),
+            padding: EdgeInsets.symmetric(horizontal: Dimension.width10),
           ),
           dropdownStyleData: DropdownStyleData(
             maxHeight: 30 * Dimension.height10,
             width: 8 * Dimension.width15,
-            offset: const Offset(0, -5),
+            offset: Offset(0, -Dimension.height5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimension.radius5),
             ),
           ),
           buttonStyleData: ButtonStyleData(
-            elevation: 2,
+            elevation: 8,
             height: Dimension.height10 + Dimension.height40,
             padding: EdgeInsets.symmetric(horizontal: Dimension.width10),
             decoration: BoxDecoration(
@@ -56,7 +56,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 child: Text(
                   item.toUpperCase(),
                   style: TextStyle(
-                    fontSize: Dimension.font18,
+                    fontSize: Dimension.font20,
                     color: Colors.black,
                   ),
                 ),

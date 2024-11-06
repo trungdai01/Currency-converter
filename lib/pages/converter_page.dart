@@ -46,13 +46,13 @@ class _ConverterPageState extends State<ConverterPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: Dimension.height15, horizontal: Dimension.height10),
+                padding: EdgeInsets.all(Dimension.height10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Enter amount",
-                      style: TextStyle(fontSize: Dimension.font16, color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: Dimension.font18),
                     ),
                     SizedBox(height: Dimension.height5),
                     TextFormField(
@@ -79,10 +79,10 @@ class _ConverterPageState extends State<ConverterPage> {
                     ),
                     SizedBox(height: Dimension.height5),
                     SizedBox(
-                      height: Dimension.height15,
+                      height: Dimension.height15 + Dimension.height5,
                       child: Text(
                         inputValidate ? "" : "Please enter a valid amount",
-                        style: const TextStyle(color: Colors.redAccent),
+                        style: TextStyle(color: Colors.redAccent, fontSize: Dimension.font16),
                       ),
                     ),
                   ],
@@ -93,7 +93,6 @@ class _ConverterPageState extends State<ConverterPage> {
                   bottom: Dimension.height10,
                   right: Dimension.height10,
                   left: Dimension.height10,
-                  top: Dimension.height5,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +102,7 @@ class _ConverterPageState extends State<ConverterPage> {
                       children: [
                         Text(
                           "From",
-                          style: TextStyle(color: Colors.white, fontSize: Dimension.font16),
+                          style: TextStyle(color: Colors.white, fontSize: Dimension.font18),
                         ),
                         SizedBox(height: Dimension.height5),
                         CustomDropdown(
@@ -133,7 +132,7 @@ class _ConverterPageState extends State<ConverterPage> {
                       children: [
                         Text(
                           "To",
-                          style: TextStyle(color: Colors.white, fontSize: Dimension.font16),
+                          style: TextStyle(color: Colors.white, fontSize: Dimension.font18),
                         ),
                         SizedBox(height: Dimension.height5),
                         CustomDropdown(
@@ -152,16 +151,14 @@ class _ConverterPageState extends State<ConverterPage> {
                 height: Dimension.height40 + Dimension.height10,
                 padding: EdgeInsets.symmetric(horizontal: Dimension.height10),
                 child: ElevatedButton(
-                  onPressed: () {
-                    context.read<CurrencyViewModel>().computeResult();
-                  },
+                  onPressed: () => context.read<CurrencyViewModel>().computeResult(),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimension.radius5)),
                     backgroundColor: AppColors.secondColor,
                   ),
                   child: Text(
                     "Convert",
-                    style: TextStyle(fontSize: Dimension.font26, color: Colors.white),
+                    style: TextStyle(fontSize: Dimension.font30, color: Colors.white),
                   ),
                 ),
               ),
@@ -172,18 +169,12 @@ class _ConverterPageState extends State<ConverterPage> {
                   children: [
                     Text(
                       "1 ${baseCurrency.toUpperCase()} = ${rateFormat.format(exchangeRate)} ${targetCurrency.toUpperCase()}",
-                      style: TextStyle(
-                        fontSize: Dimension.font20,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: Dimension.font20),
                     ),
                     SizedBox(height: Dimension.height10 * 2),
                     Text(
                       resultFormat.format(convertResult),
-                      style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize: Dimension.font36,
-                      ),
+                      style: TextStyle(color: Colors.greenAccent, fontSize: Dimension.font40),
                     ),
                   ],
                 ),
